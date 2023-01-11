@@ -9,6 +9,7 @@ from diffusers import StableDiffusionPipeline
 
 models = {"Classic model": ".model", "Figure model": ".model2"}
 current_model = models["Classic model"]
+disable_safety = False
 
 def generate_image(text):  
     print("Generation based on: " + current_model)
@@ -19,6 +20,7 @@ def generate_image(text):
 def import_model(model_path):
     pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16)
     pipe.to("cuda")
+    pipe.safety_checker = null_safety
     return pipe
 
 def change_path(radio_value):
@@ -27,7 +29,10 @@ def change_path(radio_value):
         current_model = models['Figure model']
     else:
         current_model = models["Classic model"]
-        
+
+def null_safety(images, **kwargs):
+      return images, False
+          
 
 with gr.Blocks(css="main.css") as app:
     gr.Markdown("<h2>Generate your OWN image in LEGO style</h2>")    
