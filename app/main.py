@@ -7,7 +7,8 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 from diffusers import StableDiffusionPipeline
 
 
-models = {"Classic model": ".model", "Figure model": ".model2"}
+model_names = ["Classic model 1", "Classic model 2", "Figure model"]
+models = {model_names[0]: ".model_1_30", model_names[1]: ".model_1_60", model_names[2]: ".model_2_30"}
 current_model = models["Classic model"]
 disable_safety = False
 
@@ -25,10 +26,12 @@ def import_model(model_path):
 
 def change_path(radio_value):
     global current_model
-    if(radio_value == "Figure model"):
-        current_model = models['Figure model']
-    else:
-        current_model = models["Classic model"]
+    if(radio_value == model_names[0]):
+        current_model = models[model_names[0]]
+    else if(radio_value == model_names[1]):
+        current_model = models[model_names[1]]
+    else if(radio_value == model_names[2]):
+        current_model = models[model_names[2]]
 
 def null_safety(images, **kwargs):
       return images, False
