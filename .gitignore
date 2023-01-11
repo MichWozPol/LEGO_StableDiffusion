@@ -2,6 +2,9 @@
 BLIP/
 Scraped_images/
 
+# Additional dirs
+.results/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
