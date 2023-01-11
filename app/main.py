@@ -1,23 +1,29 @@
 import gradio as gr
 import numpy as np
 import time
+import torch
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+from diffusers import StableDiffusionPipeline
 
 
-def fake_diffusion(input_val):  
-    print(input_val)
-    for _ in range(1,100):
-        time.sleep(1)
-        image = np.random.random((600, 600, 3))
-        yield image
-    image = "https://i.picsum.photos/id/867/600/600.jpg?hmac=qE7QFJwLmlE_WKI7zMH6SgH5iY5fx8ec6ZJQBwKRT44" 
+def fake_diffusion(text):  
+    pipe = import_model()
+    image = pipe(prompt=text).images[0]
     yield image
 
+def import_model():
+    model_path = ".model"
+    pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16)
+    pipe.to("cuda")
+    return pipe
 
-with gr.Blocks() as app:
+
+with gr.Blocks(css="main.css") as app:
     gr.Markdown("<h2>Generate your OWN image in LEGO style</h2>")
 
-    text_input = gr.Textbox()
-    model_output = gr.Image()
+    text_input = gr.Textbox(label="Prompt")
+    model_output = gr.Image(elem_id="out_img").style(height=512, width=512)
     text_button = gr.Button("Generate")
 
     text_button.click(fake_diffusion, inputs=text_input, outputs=model_output)
