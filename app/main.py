@@ -1,6 +1,4 @@
 import gradio as gr
-import numpy as np
-import time
 import torch
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0" #choose GPU index
