@@ -8,7 +8,9 @@ from diffusers import StableDiffusionPipeline
 
 
 model_names = ["Classic model 1", "Classic model 2", "Figure model"]
+available_devices = ['cuda', 'cpu']
 models = {model_names[0]: "./app/.model_1_30", model_names[1]: "./app/.model_1_60", model_names[2]: "./app/.model_2_30"}
+current_device = available_devices[0]
 current_model = models[model_names[0]]
 disable_safety = False
 
@@ -19,11 +21,14 @@ def generate_image(text):
     yield image
 
 def import_model(model_path):
-    pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    pipe.to(device)
+    pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16, safety_checker=None)
+    pipe.to(current_device)
     pipe.safety_checker = null_safety
     return pipe
+
+def change_device(radio_value):
+    global current_device
+    current_device = radio_value
 
 def change_path(radio_value):
     global current_model
@@ -34,14 +39,15 @@ def null_safety(images, **kwargs):
           
 
 with gr.Blocks(css="./app/main.css") as app:
-    gr.Markdown("<h2>Generate your OWN image in LEGO style</h2>")  
-      
+    gr.Markdown("<h2>Generate your OWN image in LEGO style</h2>")    
     text_input = gr.Textbox(label="Prompt")
     switch_model = gr.Radio(label="Choose Model", choices=model_names, value=model_names[0]).style(item_container=True, container=True)
+    switch_device = gr.Radio(label="Choose Device", choices=available_devices, value=available_devices[0]).style(item_container=True, container=True)
     model_output = gr.Image(label="Output Image", elem_id="out_img")
     text_button = gr.Button("Generate")
 
     switch_model.change(change_path, inputs=switch_model)
+    switch_device.change(change_device, inputs=switch_device)
     text_button.click(generate_image, inputs=text_input, outputs=model_output)
 
 
