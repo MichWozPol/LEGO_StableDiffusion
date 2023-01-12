@@ -9,6 +9,7 @@ To run app install requirements by typing: `pip3 install -r requirements`, then 
 Database was created by our own by scraping the LEGO pictures from websites such as gettyimages.com, istockphoto.com and brickset.com (scripts available in the `Preprocessing` directory).<br />
 Image captioning was done using BLIP [model](https://github.com/salesforce/BLIP). Image captioning script (`image_captioning.py`) is available in the `Preprocessing/BLIP` project directory.<br />
 App is created using [gradio](https://gradio.app) library. In order to change GPU index or models' names do it in the `app/main.py` file.
+
 If you require the LEGO database or model(s) drop us an email.
 
 <h2>Results</h2>
