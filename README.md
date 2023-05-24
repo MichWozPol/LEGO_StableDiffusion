@@ -10,7 +10,7 @@ Database was created by our own by scraping the LEGO pictures from websites such
 Image captioning was done using BLIP [model](https://github.com/salesforce/BLIP). Image captioning script (`image_captioning.py`) is available in the `Preprocessing/BLIP` project directory.<br />
 App is created using [gradio](https://gradio.app) library. In order to change GPU index or models' names do it in the `app/main.py` file.
 
-If you require the model(s) drop us an email.
+Models are available here: https://www.kaggle.com/datasets/michasakowicz/lego-dataset-models.
 
 <h2>Results</h2>
 <h3>Images:<h3>
