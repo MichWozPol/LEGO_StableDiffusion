@@ -1,6 +1,12 @@
 #out_img {
     margin-left: auto; 
     margin-right: auto;
-    min-width: 100px;
+    min-width: 300px;
     max-width: 30%;
 }
+
+@media only screen and (max-width: 800px) {
+    #out_img {
+        max-width: 90%;
+    }
+  }
