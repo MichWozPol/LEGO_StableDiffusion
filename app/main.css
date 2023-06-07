@@ -7,9 +7,6 @@
 
 @media only screen and (max-width: 800px) {
     #out_img {
-        margin-left: auto; 
-        margin-right: auto;
-        min-width: 300px;
         max-width: 90%;
     }
   }
